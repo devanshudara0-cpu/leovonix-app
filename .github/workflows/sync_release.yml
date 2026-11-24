@@ -1,0 +1,30 @@
+name: Sync v1.0 Release
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download LEOVONIX v1.0 APK from STxLEO_OTT
+        run: |
+          curl -L -o LEOVONIX_v1.0.apk https://github.com/devanshudara0-cpu/STxLEO_OTT/releases/download/v1.0/LEOVONIX_v1.0.apk
+          ls -lh LEOVONIX_v1.0.apk
+
+      - name: Publish to Release v1.0
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0
+          name: "LEOVONIX v1.0 Official Stable Release"
+          body: "Official Public Launch of LEOVONIX v1.0 OTT Cinema App
+- Brand new Cyberpunk Cinema Neon UI
+- 1-Tap Movie & YouTube Servers Install
+- 4K 60FPS ad-free streaming"
+          files: LEOVONIX_v1.0.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
